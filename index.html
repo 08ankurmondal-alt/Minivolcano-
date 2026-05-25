@@ -17,7 +17,7 @@ body {
     overflow: hidden;
 }
 
-/* Button Style */
+/* Button */
 #startBtn {
     padding: 15px 30px;
     font-size: 20px;
@@ -26,7 +26,6 @@ body {
     background: #ff4d6d;
     color: white;
     cursor: pointer;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     transition: 0.3s;
 }
 
@@ -34,40 +33,34 @@ body {
     transform: scale(1.1);
 }
 
-/* Card hidden first */
+/* Card */
 .card {
     display: none;
     background: white;
-    padding: 30px;
+    padding: 25px;
     border-radius: 20px;
     text-align: center;
     box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     max-width: 350px;
-    animation: fadeIn 1.5s ease-in-out;
 }
 
-h1 {
-    color: #ff4d6d;
-}
-
-p {
+/* Typing effect */
+#text {
     font-size: 18px;
     color: #333;
+    white-space: pre-line;
 }
 
+/* Hearts */
 .heart {
-    font-size: 30px;
-    animation: beat 1s infinite;
+    position: absolute;
+    color: red;
+    animation: float 5s linear infinite;
 }
 
-@keyframes fadeIn {
-    from {opacity: 0; transform: translateY(50px);}
-    to {opacity: 1; transform: translateY(0);}
-}
-
-@keyframes beat {
-    0%, 100% {transform: scale(1);}
-    50% {transform: scale(1.2);}
+@keyframes float {
+    0% {transform: translateY(100vh);}
+    100% {transform: translateY(-10vh);}
 }
 </style>
 </head>
@@ -77,22 +70,49 @@ p {
 <button id="startBtn">Click Me 💛</button>
 
 <div class="card" id="card">
-    <h1>Sorry 💛</h1>
-    <p>
-        কালকে কথা বলতে বলতে আমি ঘুমিয়ে পড়েছিলাম… 😔<br><br>
-        এটা ইচ্ছে করে করিনি… সত্যি বলছি, তোমার সাথে কথা বলতে আমার খুব ভালো লাগে।<br><br>
-        তোমাকে না জানিয়ে এভাবে চলে যাওয়া ঠিক হয়নি…<br><br>
-        তাই একটা ছোট্ট sorry বললাম 💛<br><br>
-        আজ আমি পুরো জেগে আছি… আবার কথা বলবো? 😊
-    </p>
-    <div class="heart">💖</div>
+    <h2>Sorry 💛</h2>
+    <p id="text"></p>
 </div>
 
 <script>
+
+// Your message
+const message = `Sorry kal ghumiye porechilam or jonno 😞..
+Pls maf kore dis 🙏🏼...
+Khub tired lagchilo or jonno mone hoi ghum peyegachilo ...
+Ami nijei jani nah khokon ghumiye porechilam...`;
+
+// Typing effect
+let i = 0;
+function typeWriter() {
+    if (i < message.length) {
+        document.getElementById("text").innerHTML += message.charAt(i);
+        i++;
+        setTimeout(typeWriter, 40);
+    }
+}
+
+// Button click
 document.getElementById("startBtn").onclick = function() {
-    document.getElementById("startBtn").style.display = "none";
+    this.style.display = "none";
     document.getElementById("card").style.display = "block";
+    typeWriter();
 };
+
+// Floating hearts
+setInterval(() => {
+    let heart = document.createElement("div");
+    heart.innerHTML = "💖";
+    heart.className = "heart";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (20 + Math.random() * 20) + "px";
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+        heart.remove();
+    }, 5000);
+}, 500);
+
 </script>
 
 </body>
